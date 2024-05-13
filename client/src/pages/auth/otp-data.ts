@@ -51,7 +51,7 @@ const OtpData = () => {
             setTimeout(() => closePopup(), 1500);
             return;
         }
-        axios.post(`${HOST}/register`, signupData)
+        axios.post(`${HOST}/api/users/register`, signupData)
             .then(res => {
                 const {status, message} = res.data;
                 if(status) {

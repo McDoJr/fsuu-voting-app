@@ -1,4 +1,4 @@
-import DashboardNavigation from "./dashboard-navigation.tsx";
+import AdminNavigation from "./admin-navigation.tsx";
 import React from "react";
 
 interface AdminContainerProp {
@@ -9,8 +9,8 @@ interface AdminContainerProp {
 const AdminContainer = ({ page, children }: AdminContainerProp) => {
 
     return (
-        <section className="w-full h-screen flex">
-            <DashboardNavigation page={page}/>
+        <section className="w-full h-screen flex justify-between">
+            <AdminNavigation page={page}/>
             {children}
         </section>
     )

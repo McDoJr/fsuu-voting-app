@@ -1,6 +1,6 @@
-import {LeaderboardObject} from "../../utils/types.ts";
-import {CandidateObject, getCandidate} from "../../utils/mock-data.ts";
-import {format} from "../../utils/utils.ts";
+import {LeaderboardObject} from "../../../utils/types.ts";
+import {CandidateObject, getCandidate} from "../../../utils/mock-data.ts";
+import {format} from "../../../utils/utils.ts";
 
 interface LeaderboardProps {
     data: LeaderboardObject,
@@ -25,6 +25,8 @@ const Leaderboard = ({ data, limit }: LeaderboardProps) => {
 
 
     const getProgressBar = (candidate: CandidateObject, ranking: number) => {
+
+        console.log(ranking)
 
         return (
             <div className="w-[240px] h-[40px] bg-gray-200 relative text-[14px] font-[500] text-center leading-[40px]">

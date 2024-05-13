@@ -1,5 +1,5 @@
 import {LoadingOptions} from "../../components/loading.tsx";
-import {PopupForm} from "../../components/popup.tsx";
+import {OtpPopup, PopupForm} from "../../components/popup.tsx";
 import {ErrorOptions} from "../../components/error-label.tsx";
 import {SignupForm, validateForm} from "../../utils/forms.ts";
 import {ChangeEvent, SubmitEvent} from "../../utils/types.ts";
@@ -14,6 +14,12 @@ export const SignupData = () => {
     const { handlePopup, getView, closePopup } = PopupForm();
     const { formData, setFormData, handleChange: onChange } = SignupForm();
     const { errors, setErrors, validateErrors, getLabel, getStyleResult } = ErrorOptions();
+    const { getOtpPopup, viewOtpPopup } = OtpPopup();
+
+
+    const handleOtpProceed = () => {
+        navigate("/signup/otp", {state: {data: formData}})
+    }
 
     const handleChange = (e: ChangeEvent) => {
         onChange(e);
@@ -29,24 +35,29 @@ export const SignupData = () => {
         }else {
             setErrors({});
             viewLoading();
-            axios.post(`${HOST}/api/users/signup`, {email: formData.email})
+            const {email} = formData;
+            axios.post(`${HOST}/api/users/signup`, {email})
                 .then(res => {
                     const {status, message} = res.data;
                     if(status) {
-                        axios.post(`${HOST}/api/users/otp`, {email: formData.email})
+                        axios.post(`${HOST}/api/users/otp`, {email})
                             .then(res => {
                                 const {otp} = res.data;
-                                navigate("/signup/otp", {state: {data: {...formData, otp}}});
+                                if(otp) {
+                                    localStorage.setItem("otp", JSON.stringify(new Date()));
+                                    setFormData({...formData, otp})
+                                    viewOtpPopup();
+                                }
                                 closeLoading();
-                            })
+                            }).catch(console.log)
                     }else{
                         handlePopup(true, false, message);
                         setTimeout(() => closePopup(), 1500);
                         closeLoading();
                     }
-                })
+                }).catch(console.log)
         }
     }
 
-    return { loadingStatus, handleSubmit, handleChange, getLabel, getView, errors, setFormData, getStyleResult, formData };
+    return { loadingStatus, handleSubmit, handleChange, getLabel, getView, errors, setFormData, getStyleResult, formData, getOtpPopup, handleOtpProceed };
 }

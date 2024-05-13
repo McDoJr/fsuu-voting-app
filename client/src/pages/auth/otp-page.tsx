@@ -6,7 +6,8 @@ const OtpPage = () => {
     const { handleSubmit, onKeyDown, onChange, formData, sendToLandingPage, getView } = OtpData();
 
     return (
-        <>
+        <section className="w-full h-screen flex flex-col justify-center items-center">
+            <h1 className="font-prompt font-bold text-dark-blue text-5xl mb-6 drop-shadow-lg">VERIFICATION</h1>
             <form action=""
                   onSubmit={handleSubmit}
                   className="py-6 px-16 rounded-md shadow-lg shadow-gray-700 flex flex-col items-center relative">
@@ -33,7 +34,7 @@ const OtpPage = () => {
                 </button>
             </form>
             {getView()}
-        </>
+        </section>
     )
 }
 export default OtpPage;

@@ -5,7 +5,7 @@ import {COURSES, DEPARTMENTS} from "../../utils/data.ts";
 
 const SignupPage = () => {
 
-    const { handleSubmit, handleChange, formData, getView, getLabel, loadingStatus, getStyleResult } = SignupData();
+    const { handleSubmit, handleChange, formData, getView, getLabel, loadingStatus, getStyleResult, getOtpPopup, handleOtpProceed } = SignupData();
     // const [view, setView] = useState(false);
 
     return (
@@ -108,6 +108,7 @@ const SignupPage = () => {
             </div>
             {loadingStatus()}
             {getView()}
+            {getOtpPopup(handleOtpProceed)}
             {/*{view && <TermsAndCondition setView={setView} handleAgreeAndClose={handleAgreeAndClose}/>}*/}
         </section>
     )

@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
-import {candidateList, CandidateObject, positions} from "../../utils/mock-data.ts";
+import {candidateList, CandidateObject, positions} from "../../../utils/mock-data.ts";
 import Leaderboard from "./leaderboard.tsx";
 import {FaCaretDown, FaCaretLeft, FaCaretRight} from "react-icons/fa";
-import {colors, format, getLogo} from "../../utils/utils.ts";
-import {LeaderboardObject} from "../../utils/types.ts";
-import {DEPARTMENTS, getId} from "../../utils/data.ts";
+import {colors, format, getLogo} from "../../../utils/utils.ts";
+import {LeaderboardObject} from "../../../utils/types.ts";
+import {DEPARTMENTS, getId} from "../../../utils/data.ts";
 
 interface DashboardSummaryProp {
     type: string

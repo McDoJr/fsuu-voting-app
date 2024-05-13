@@ -1,14 +1,14 @@
 import {StringArrayObject} from "./types.ts";
 
 export const DEPARTMENTS: StringArrayObject = {
-    CSP: ['BSIT', 'BSCS', 'BSIT-CA', 'BLISS'],
+    AP: ['BSA'],
     ASP: ['BSAS'],
-    TEP: ['BSEE', 'BSSE', 'DEPED'],
+    BAP: ['BSBA'],
+    CJEP: ['BSCRIM'],
+    CSP: ['BSIT', 'BSCS', 'BSIT-CA', 'BLISS'],
     ETP: ['BSCE', 'BSCI'],
     NP: ['BSN'],
-    CJEP: ['BSCRIM'],
-    AP: ['BSA'],
-    BAP: ['BSBA'],
+    TEP: ['BSEE', 'BSSE', 'DEPED'],
 }
 
 export const COURSES = (department: string) => {

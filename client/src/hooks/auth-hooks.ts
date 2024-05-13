@@ -13,6 +13,7 @@ export const authData = () => {
 
     const isOtp = () => {
         const otp = localStorage.getItem("otp");
+        console.log(otp);
         if(otp) {
             const date = new Date(JSON.parse(otp));
             const isStillValid = getTimeDifference(date) <= 300;

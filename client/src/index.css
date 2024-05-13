@@ -5,6 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.test {
+  transition: all 0.5s ease;
+}
+
 .btn {
   border: 2px solid #3EC6FF;
   outline: none;
@@ -26,6 +30,15 @@
 }
 
 #terms-container::-webkit-scrollbar-thumb {
+  background-color: #032D6C;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
   background-color: #032D6C;
 }
 

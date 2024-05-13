@@ -35,7 +35,8 @@ export const SignupForm = () => {
         email: "",
         password: "",
         confirm_password: "",
-        terms: false
+        terms: false,
+        otp: ""
     });
 }
 
