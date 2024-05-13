@@ -1,0 +1,68 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+  border: 2px solid #3EC6FF;
+  outline: none;
+  padding: 12px 64px;
+  background-color: #3EC6FF;
+  border-radius: 50px;
+  font-size: 35px;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #c8ecff;
+  border: 2px solid #3EC6FF;
+}
+
+#terms-container::-webkit-scrollbar {
+  width: 15px;
+  background-color: #F5F5F5;
+}
+
+#terms-container::-webkit-scrollbar-thumb {
+  background-color: #032D6C;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+.loader {
+  width: 50px;
+  --b: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 1px;
+  background: conic-gradient(#0000 10%,#FFFFFF) content-box;
+  -webkit-mask:
+          repeating-conic-gradient(#0000 0deg,#000 1deg 20deg,#0000 21deg 36deg),
+          radial-gradient(farthest-side,#0000 calc(100% - var(--b) - 1px),#000 calc(100% - var(--b)));
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+  animation:l4 1s infinite steps(10);
+}
+.loader-white {
+  width: 50px;
+  --b: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 1px;
+  background: conic-gradient(#FFFFFF 10%,#000000) content-box;
+  -webkit-mask:
+          repeating-conic-gradient(#0000 0deg,#000 1deg 20deg,#0000 21deg 36deg),
+          radial-gradient(farthest-side,#0000 calc(100% - var(--b) - 1px),#000 calc(100% - var(--b)));
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+  animation:l4 1s infinite steps(10);
+}
+@keyframes l4 {to{transform: rotate(1turn)}}
