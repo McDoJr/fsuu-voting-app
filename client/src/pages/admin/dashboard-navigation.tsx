@@ -1,4 +1,6 @@
 import {FaSignOutAlt} from "react-icons/fa";
+import {authData} from "../../hooks/auth-hooks.ts";
+import {useNavigate} from "react-router-dom";
 
 interface DashboardNavigationProp {
     page: string
@@ -6,6 +8,7 @@ interface DashboardNavigationProp {
 
 const DashboardNavigation = ({ page }: DashboardNavigationProp) => {
 
+    const navigate = useNavigate();
     const getColor = (id: string) => {
         return id === page ? 'text-white' : 'text-gray-400';
     }
@@ -23,7 +26,11 @@ const DashboardNavigation = ({ page }: DashboardNavigationProp) => {
                 <li className={`mb-3 font-[500] ${getColor('results')}`}><a href="">Show All Results</a></li>
             </ul>
 
-            <button className="w-full py-1.5 self-start flex justify-center items-center cursor-pointer border border-gray-400 mt-auto"><FaSignOutAlt className="mr-2"/>Sign Out</button>
+            <button
+                className="w-full py-1.5 self-start flex justify-center items-center cursor-pointer border border-gray-400 mt-auto" onClick={() => {
+                authData().removeAccount();
+                navigate("/");
+            }}><FaSignOutAlt className="mr-2"/>Sign Out</button>
         </div>
     )
 }

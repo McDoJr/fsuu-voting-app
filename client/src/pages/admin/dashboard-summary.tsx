@@ -54,10 +54,10 @@ const DashboardSummary = ({ type }: DashboardSummaryProp) => {
     }
 
     return (
-        <div className="w-full pt-8 px-3 flex flex-col">
+        <div className="w-full pt-4 px-3 flex flex-col">
             <div className="flex items-center mb-4">
                 <img src={logo + ""} alt="" className="w-16 h-16 mr-2"/>
-                <h1 className="text-3xl font-bold mb-1.5">{format(type)} {type === "executive" ? "Council" : "Department"}</h1>
+                <h1 className="text-2xl font-bold mb-1.5">{format(type)} {type === "executive" ? "Council" : "Department"}</h1>
                 {type === "local" && (
                     <div id="dropdown" className="ml-20 relative">
                         <button

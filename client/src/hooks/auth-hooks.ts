@@ -22,9 +22,13 @@ export const authData = () => {
         return false;
     }
 
+    const removeAccount = () => {
+        localStorage.removeItem("user");
+    }
+
     const removeOtp = () => {
         localStorage.removeItem("otp");
     }
 
-    return { loggedIn, getData, isOtp, removeOtp };
+    return { loggedIn, getData, isOtp, removeOtp, removeAccount };
 }
