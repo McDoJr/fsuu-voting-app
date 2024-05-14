@@ -4,9 +4,10 @@ import React from "react";
 import {CandidateObject} from "./mock-data.ts";
 
 export type StringObject = Record<string, string>;
-export type MixedObject = Record<string, string|number>;
+export type UserObject = Record<string, string>;
 export type LeaderboardObject = Record<string, string|CandidateObject[]>;
 export type ResultsObject = Record<string, CandidateObject[]>;
+export type VotingObject = Record<string, CandidateObject[]>;
 export type NumberObject = Record<string, number>;
 export type BooleanObject = Record<string, boolean>;
 export type StringArrayObject = Record<string, string[]>;

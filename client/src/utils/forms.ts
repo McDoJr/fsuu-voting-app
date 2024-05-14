@@ -24,6 +24,19 @@ export const Forms = (data: FormObject = {}) => {
     return {formData, setFormData, handleChange};
 }
 
+export const UserForm = () => {
+    return Forms({
+        student_id: "",
+        firstname: "",
+        lastname: "",
+        course: "",
+        year: "",
+        department: "",
+        email: "",
+        password: ""
+    });
+}
+
 export const SignupForm = () => {
     return Forms({
         student_id: "",

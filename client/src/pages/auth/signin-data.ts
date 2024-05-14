@@ -6,9 +6,12 @@ import {SigninForm, validateForm} from "../../utils/forms.ts";
 import {ErrorOptions} from "../../components/error-label.tsx";
 import axios from "axios";
 import {HOST} from "../../utils/data.ts";
+import {useContext} from "react";
+import {DataContext} from "../../utils/context.ts";
 
 export const SigninData = () => {
 
+    const { saveData } = useContext(DataContext);
     const navigate = useNavigate();
     const { viewLoading, closeLoading, loadingStatus } = LoadingOptions();
     const { handlePopup, getView, closePopup } = PopupForm();
@@ -45,10 +48,12 @@ export const SigninData = () => {
             }else {
                 axios.post(`${HOST}/api/users/login`, formData)
                     .then(res => {
-                        const {status, message} = res.data;
+                        const {status, message, data} = res.data;
                         if(status) {
                             handlePopup(true, true, message);
                             setTimeout(() => closePopup(), 1500);
+                            saveData(data);
+                            navigate("/vote");
                         } else {
                             handlePopup(true, false, message);
                             setTimeout(() => closePopup(), 1500);

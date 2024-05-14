@@ -1,4 +1,5 @@
 import {StringArrayObject} from "./types.ts";
+import {DataContextObject} from "./context.ts";
 
 export const DEPARTMENTS: StringArrayObject = {
     AP: ['BSA'],
@@ -9,6 +10,10 @@ export const DEPARTMENTS: StringArrayObject = {
     ETP: ['BSCE', 'BSCI'],
     NP: ['BSN'],
     TEP: ['BSEE', 'BSSE', 'DEPED'],
+}
+
+export const convertData = (data: object) => {
+    return <DataContextObject> data;
 }
 
 export const COURSES = (department: string) => {
