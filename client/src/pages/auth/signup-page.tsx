@@ -1,17 +1,19 @@
 import {SignupData} from "./signup-data.ts";
 import {Link, useNavigate} from "react-router-dom";
 import Password from "../../components/password.tsx";
-import {COURSES, DEPARTMENTS} from "../../utils/data.ts";
-import {useContext, useEffect} from "react";
+import {convertInputElement, COURSES, DEPARTMENTS} from "../../utils/data.ts";
+import {useContext, useEffect, useState} from "react";
 import {DataContext} from "../../utils/context.ts";
 import {authData} from "../../hooks/auth-hooks.ts";
 import {setTitle} from "../../utils/utils.ts";
+import TermsAndCondition from "./terms-and-condition.tsx";
 
 const SignupPage = () => {
 
     const navigate = useNavigate();
     const {user} = useContext(DataContext);
-    const { handleSubmit, handleChange, formData, getView, getLabel, loadingStatus, getStyleResult, getOtpPopup, handleOtpProceed } = SignupData();
+    const { handleSubmit, handleChange, formData, setFormData, getView, getLabel, loadingStatus, getStyleResult, getOtpPopup, handleOtpProceed } = SignupData();
+    const [view, setView] = useState(false);
 
     useEffect(() => {
         setTitle('Sign Up');
@@ -22,6 +24,13 @@ const SignupPage = () => {
             navigate('/vote');
         }
     }, []);
+
+    const handleAgreeAndClose = () => {
+        const element = convertInputElement(document.getElementById("terms")!);
+        element.checked = true;
+        setView(false);
+        setFormData({...formData, terms: true})
+    }
 
     return (
         <section className="w-full h-screen flex flex-col justify-center items-center relative">
@@ -109,7 +118,7 @@ const SignupPage = () => {
                                onChange={handleChange}/>
                         <label htmlFor="" className="text-[12px]">I agree to the <span
                             className="text-[12px] text-blue-600 cursor-pointer underline"
-                            onClick={() => {}}>Terms and Conditions</span></label>
+                            onClick={() => setView(true)}>Terms and Conditions</span></label>
                     </div>
                     <button
                         type="submit"
@@ -124,7 +133,7 @@ const SignupPage = () => {
             {loadingStatus()}
             {getView()}
             {getOtpPopup(handleOtpProceed)}
-            {/*{view && <TermsAndCondition setView={setView} handleAgreeAndClose={handleAgreeAndClose}/>}*/}
+            {view && <TermsAndCondition setView={setView} handleAgreeAndClose={handleAgreeAndClose}/>}
         </section>
     )
 }

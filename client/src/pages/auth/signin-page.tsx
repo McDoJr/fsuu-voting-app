@@ -21,7 +21,6 @@ const SigninPage = () => {
         if(Object.values(user).every(value => value)) {
             navigate('/vote');
         }
-        // history.replaceState({pathname: '/admin/dashboard'}, document.title);
     }, []);
 
 
