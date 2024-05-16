@@ -1,29 +1,29 @@
-import {useEffect, useState} from "react";
-import {candidateList, CandidateObject, positions} from "../../../utils/mock-data.ts";
+import {useContext, useEffect, useState} from "react";
+import {candidateList, positions} from "../../../utils/mock-data.ts";
 import Leaderboard from "./leaderboard.tsx";
 import {FaCaretDown, FaCaretLeft, FaCaretRight} from "react-icons/fa";
-import {colors, format, getLogo} from "../../../utils/utils.ts";
-import {LeaderboardObject} from "../../../utils/types.ts";
+import {format, getLogo} from "../../../utils/utils.ts";
+import {NomineesObject} from "../../../utils/types.ts";
 import {DEPARTMENTS, getId} from "../../../utils/data.ts";
+import {DataContext} from "../../../utils/context.ts";
 
 interface DashboardSummaryProp {
-    type: string
+    type: string,
 }
 
 const DashboardSummary = ({ type }: DashboardSummaryProp) => {
 
+    const isExecutive = type === "executive";
+    const { nominees, voters } = useContext(DataContext);
     const [index, setIndex] = useState(0);
     const [dropdown, setDropdown] = useState(false);
-    const [department, setDepartment] = useState(type === "executive" ? type : 'asp');
+    const [department, setDepartment] = useState(type === "executive" ? type : 'ap');
     const totalPositions = 4;
     const position = positions(type)[index];
     const position2 = positions(type)[index+1];
     const logo = getLogo(department);
-    const candidates: CandidateObject[] = candidateList(type)[position];
-    const candidates2: CandidateObject[] = candidateList(type)[position2];
-
-    const first: LeaderboardObject = {type, position, candidates};
-    const second: LeaderboardObject = {type, position: position2, candidates: candidates2};
+    const first: NomineesObject = candidateList(type, nominees, isExecutive ? undefined : department).filter(value => value.position === position);
+    const second: NomineesObject = candidateList(type, nominees, isExecutive ? undefined : department).filter(value => value.position === position2);
 
     useEffect(() => {
 
@@ -53,8 +53,13 @@ const DashboardSummary = ({ type }: DashboardSummaryProp) => {
         if (index > 0) setIndex(index - 1);
     }
 
+    const getTotal = (): number => {
+        if(type === "local") return voters.filter(value => value.department === department.toUpperCase()).length;
+        return voters.length;
+    }
+
     return (
-        <div className="w-full pt-4 px-3 flex flex-col">
+        <div className="w-full pt-4 px-3 flex flex-col select-none">
             <div className="flex items-center mb-4">
                 <img src={logo + ""} alt="" className="w-16 h-16 mr-2"/>
                 <h1 className="text-2xl font-bold mb-1.5">{format(type)} {type === "executive" ? "Council" : "Department"}</h1>
@@ -63,7 +68,7 @@ const DashboardSummary = ({ type }: DashboardSummaryProp) => {
                         <button
                             id="dropdown"
                             onClick={() => setDropdown(!dropdown)}
-                            className="font-bold border py-1.5 w-[100px] cursor-pointer text-white relative" style={{backgroundColor: colors[department]}}>
+                            className="font-bold border py-1.5 w-[100px] cursor-pointer text-white relative bg-dark-blue">
                             {department.toUpperCase()} <FaCaretDown id="dropdown" className="absolute right-1.5 top-2.5"/></button>
                         <div id="dropdown" className={`w-full absolute border bg-white z-10 ${dropdown ? 'flex flex-col' : 'hidden'}`}>
                             {Object.keys(DEPARTMENTS).filter((value) => value.toLowerCase() !== department).map((value, key) => {
@@ -74,8 +79,8 @@ const DashboardSummary = ({ type }: DashboardSummaryProp) => {
                 )}
             </div>
             <div className="flex relative">
-                <Leaderboard data={first} limit={2}/>
-                <Leaderboard data={second} limit={2}/>
+                <Leaderboard position={position} data={first} limit={2} total={getTotal()}/>
+                <Leaderboard position={position2} data={second} limit={2} total={getTotal()}/>
                 {/*<FaCaretLeft onClick={previous} className={`absolute left-0 top-[108px] text-[30px] cursor-pointer ${index === 0 ? 'pointer-events-none text-dark-blue/60' : 'text-dark-blue'}`}/>*/}
                 {/*<FaCaretRight onClick={next} className={`absolute right-0 top-[108px] text-[30px] cursor-pointer text-dark-blue ${index === totalPositions - 2 ? 'pointer-events-none text-dark-blue/60' : 'text-dark-blue'}`}/>*/}
             </div>

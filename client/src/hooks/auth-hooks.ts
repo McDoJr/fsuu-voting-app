@@ -7,7 +7,7 @@ export const authData = () => {
     }
 
     const getData = () => {
-        const data = localStorage.getItem("user");
+        const data = localStorage.getItem("admin");
         return data ? data : false;
     }
 
@@ -24,7 +24,7 @@ export const authData = () => {
     }
 
     const removeAccount = () => {
-        localStorage.removeItem("user");
+        localStorage.removeItem("admin");
     }
 
     const removeOtp = () => {

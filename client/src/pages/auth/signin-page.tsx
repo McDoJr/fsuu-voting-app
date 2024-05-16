@@ -1,16 +1,27 @@
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
 import {setTitle} from "../../utils/utils.ts";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Button from "../../components/button.tsx";
 import Password from "../../components/password.tsx";
 import {SigninData} from "./signin-data.ts";
+import {DataContext} from "../../utils/context.ts";
+import {authData} from "../../hooks/auth-hooks.ts";
 
 const SigninPage = () => {
 
+    const {user} = useContext(DataContext);
+    const navigate = useNavigate();
     const { handleSubmit, loadingStatus, handleChange, getView, getLabel, getStyleResult } = SigninData();
 
     useEffect(() => {
         setTitle("Sign In");
+        if(authData().loggedIn()) {
+            navigate('/admin/dashboard');
+        }
+        if(Object.values(user).every(value => value)) {
+            navigate('/vote');
+        }
+        // history.replaceState({pathname: '/admin/dashboard'}, document.title);
     }, []);
 
 

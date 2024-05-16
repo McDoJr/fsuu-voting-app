@@ -1,12 +1,21 @@
 import AdminContainer from "../admin-container.tsx";
-import {currentDate, format} from "../../../utils/utils.ts";
+import {currentDate, format, setTitle} from "../../../utils/utils.ts";
 import {candidateList} from "../../../utils/mock-data.ts";
 import ResultSheet from "./result-sheet.tsx";
 import {DEPARTMENTS} from "../../../utils/data.ts";
+import {useContext, useEffect} from "react";
+import {DataContext} from "../../../utils/context.ts";
 
 const ResultsPage = () => {
 
-    const executives = candidateList("executive");
+    const {updateNominees, nominees} = useContext(DataContext);
+
+    const executives = candidateList("executive", nominees);
+
+    useEffect(() => {
+        setTitle('Overall Results');
+        updateNominees();
+    }, []);
 
     return (
         <AdminContainer page="results">
@@ -22,9 +31,9 @@ const ResultsPage = () => {
                         <p className="font-[500]">{currentDate()}</p>
                     </div>
                 </div>
-                <ResultSheet title="Executive Council" data={executives} />
+                <ResultSheet type="executive" title="Executive Council" data={executives} />
                 {Object.keys(DEPARTMENTS).map((value, index) => {
-                    return <ResultSheet key={index} title={`${format(value)} Program`} data={candidateList("local")} />
+                    return <ResultSheet key={index} type="local" title={`${format(value)} Program`} data={candidateList("local", nominees, value)} />
                 })}
             </section>
         </AdminContainer>

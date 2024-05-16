@@ -53,6 +53,17 @@ export const SignupForm = () => {
     });
 }
 
+export const RegistrationForm = () => {
+    return Forms({
+        student_id: "",
+        firstname: "",
+        lastname: "",
+        year: "",
+        department: "",
+        type: "",
+    });
+}
+
 export const SigninForm = () => {
     return Forms({
         email: "",

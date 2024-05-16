@@ -5,6 +5,10 @@ class DataTable {
         this.table = table;
     }
 
+    setTable = (table) => {
+        this.table = table;
+    }
+
     findAll = (callback) => {
         let sql = `SELECT * FROM ${this.table}`;
         this.db.query(sql, (error, result) => {
@@ -48,6 +52,22 @@ class DataTable {
             .join("")}`;
         let sql = `DELETE FROM ${this.table} WHERE ${conditions}`;
         this.db.query(sql, Object.values(datas), (error, result) => {
+            if(error) throw error;
+            return callback(result);
+        })
+    }
+
+    updateVotes = (datas, conditions, callback) => {
+        const values = [];
+        for(const data of datas) {
+            values.push(`(${Object.values(data).join(',')})`)
+        }
+        let sql = `INSERT INTO ${this.table} 
+                    (${Object.keys(datas[0]).join(',')}) 
+                    VALUES ${values.join(",")} 
+                    ON DUPLICATE KEY UPDATE votes = VALUES(votes)`;
+
+        this.db.query(sql, (error, result) => {
             if(error) throw error;
             return callback(result);
         })

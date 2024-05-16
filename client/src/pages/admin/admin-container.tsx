@@ -9,7 +9,7 @@ interface AdminContainerProp {
 const AdminContainer = ({ page, children }: AdminContainerProp) => {
 
     return (
-        <section className="w-full h-screen flex justify-between">
+        <section className="w-full min-h-screen flex justify-between">
             <AdminNavigation page={page}/>
             {children}
         </section>

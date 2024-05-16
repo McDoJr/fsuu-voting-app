@@ -27,7 +27,8 @@ const AdminNavigation = ({ page }: DashboardNavigationProp) => {
                 <ul className="mt-12 text-gray-400">
                     <li className={`mb-3 font-[500] ${getColor('dashboard')}`}><Link
                         to="/admin/dashboard">Dashboard</Link></li>
-                    <li className={`mb-3 font-[500] ${getColor('reports')}`}><Link to="">Reports</Link></li>
+                    {/*<li className={`mb-3 font-[500] ${getColor('reports')}`}><Link to="">Reports</Link></li>*/}
+                    <li className={`mb-3 font-[500] ${getColor('registration')}`}><Link to="/admin/registration">Registration</Link></li>
                     <li className={`mb-3 font-[500] ${getColor('results')}`}><Link to="/admin/results">Results</Link>
                     </li>
                 </ul>

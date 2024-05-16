@@ -1,12 +1,27 @@
 import {SignupData} from "./signup-data.ts";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Password from "../../components/password.tsx";
 import {COURSES, DEPARTMENTS} from "../../utils/data.ts";
+import {useContext, useEffect} from "react";
+import {DataContext} from "../../utils/context.ts";
+import {authData} from "../../hooks/auth-hooks.ts";
+import {setTitle} from "../../utils/utils.ts";
 
 const SignupPage = () => {
 
+    const navigate = useNavigate();
+    const {user} = useContext(DataContext);
     const { handleSubmit, handleChange, formData, getView, getLabel, loadingStatus, getStyleResult, getOtpPopup, handleOtpProceed } = SignupData();
-    // const [view, setView] = useState(false);
+
+    useEffect(() => {
+        setTitle('Sign Up');
+        if(authData().loggedIn()) {
+            navigate('/admin/dashboard');
+        }
+        if(Object.values(user).every(value => value)) {
+            navigate('/vote');
+        }
+    }, []);
 
     return (
         <section className="w-full h-screen flex flex-col justify-center items-center relative">

@@ -34,11 +34,11 @@ export const SigninData = () => {
             const {email, password} = formData;
             if(email === "admin") {
                 if(password === "1234") {
-                    handlePopup(true, true, "Login as admin successfully!");
-                    localStorage.setItem("user", "admin");
-                    localStorage.setItem("otp", JSON.stringify(new Date()));
+                    handlePopup(true, true, "Login as admin!");
+                    localStorage.setItem("admin", "admin");
                     setTimeout(() => {
                         closePopup();
+                        // window.history.pushState({}, document.title, '/admin/dashboard')
                         navigate("/admin/dashboard");
                     }, 1500);
                 }else {

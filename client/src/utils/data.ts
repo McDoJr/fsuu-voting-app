@@ -1,5 +1,6 @@
 import {StringArrayObject} from "./types.ts";
 import {DataContextObject} from "./context.ts";
+import {CandidateObject, createCandidate} from "./mock-data.ts";
 
 export const DEPARTMENTS: StringArrayObject = {
     AP: ['BSA'],
@@ -10,6 +11,14 @@ export const DEPARTMENTS: StringArrayObject = {
     ETP: ['BSCE', 'BSCI'],
     NP: ['BSN'],
     TEP: ['BSEE', 'BSSE', 'DEPED'],
+}
+
+export const convertInputElement = (element: Element | JSX.Element) => {
+    return <HTMLInputElement> element;
+}
+
+export const convertFormElement = (element: Element | JSX.Element) => {
+    return <HTMLFormElement> element;
 }
 
 export const convertData = (data: object) => {
@@ -27,6 +36,27 @@ export const getTimeDifference = (oldDate: Date) => {
 export const getId = (element: EventTarget): string => {
     const result = <HTMLElement> element;
     return result.id;
+}
+
+export const sampleList = () => {
+    const list: CandidateObject[] = [];
+    for(let i = 0; i < 2; i++) {
+        list.push(createCandidate(i, "N", "A", 0));
+    }
+
+    return list;
+}
+
+export const getGridLabel = (total: number) => {
+    let list = [];
+    if(total <= 5) {
+        for(let i = 0; i <= total; i++) {
+            list.push(i);
+        }
+    }else {
+        list = [0, total/2, total];
+    }
+    return list;
 }
 
 export const HOST = "http://localhost:8081";
