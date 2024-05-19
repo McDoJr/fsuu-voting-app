@@ -49,7 +49,7 @@ export const OtpPopup = () => {
             <section className="w-full h-full absolute top-0 left-0 flex justify-center items-center bg-black/80">
                 <div className="py-6 px-10 flex flex-col items-center justify-center bg-white relative">
                     <h1 className="text-3xl font-bold text-dark-blue">VERIFICATION</h1>
-                    <p className="mb-6 text-sm">OTP has been sent to your email</p>
+                    <p className="mb-6 text-sm mt-3">OTP has been sent to your email</p>
                     <Button type="button" onClick={handleClick}>PROCEED</Button>
                 </div>
             </section>

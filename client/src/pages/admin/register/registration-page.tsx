@@ -56,6 +56,15 @@ const RegistrationPage = () => {
                     <input type="text" placeholder="Student ID" name="student_id"
                            onChange={handleChange}
                            className={`w-full border border-gray-400 px-4 py-1.5 text-sm text-black rounded-md mb-3 outline-1`}/>
+                    <select name="year"
+                            onChange={handleChange}
+                            className={`w-full cursor-pointer border border-gray-400 px-4 py-1.5 text-sm ${formData.year ? 'text-black' : 'text-placeholder'} rounded-md mb-3 outline-1`}>
+                        <option hidden>Year</option>
+                        <option value="1" className="text-dark-blue">I</option>
+                        <option value="2" className="text-dark-blue">II</option>
+                        <option value="3" className="text-dark-blue">III</option>
+                        <option value="4" className="text-dark-blue">IV</option>
+                    </select>
                     <select name="type"
                             onChange={handleChange}
                             className={`w-full cursor-pointer border border-gray-400 px-4 py-1.5 text-sm ${formData.year ? 'text-black' : 'text-placeholder'} rounded-md mb-3 outline-1`}>
@@ -80,15 +89,6 @@ const RegistrationPage = () => {
                         {formData.type && positions(formData.type + "").map((data, index) => {
                             return <option value={data} className="text-dark-blue" key={index}>{data}</option>;
                         })}
-                    </select>
-                    <select name="year"
-                            onChange={handleChange}
-                            className={`w-full cursor-pointer border border-gray-400 px-4 py-1.5 text-sm ${formData.year ? 'text-black' : 'text-placeholder'} rounded-md mb-3 outline-1`}>
-                        <option hidden>Year</option>
-                        <option value="1" className="text-dark-blue">I</option>
-                        <option value="2" className="text-dark-blue">II</option>
-                        <option value="3" className="text-dark-blue">III</option>
-                        <option value="4" className="text-dark-blue">IV</option>
                     </select>
                     <Button>SUBMIT</Button>
                 </form>

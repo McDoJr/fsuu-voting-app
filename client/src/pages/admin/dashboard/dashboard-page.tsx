@@ -49,7 +49,7 @@ const DashboardPage = () => {
 
     const getNotification = () => {
 
-        const list = history.sort((a, b) => parseInt(a.id + '') - parseInt(b.id + ''));
+        const list = history.sort((a , b) => parseInt(b.id + '') - parseInt(a.id + '')).slice(0, 4);
 
         return (
             <div id="bell" className="w-[180px] flex flex-col py-3 px-4 rounded-lg absolute left-0 top-5 bg-white border z-50 shadow-lg">

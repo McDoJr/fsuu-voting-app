@@ -54,7 +54,7 @@ export const getGridLabel = (total: number) => {
             list.push(i);
         }
     }else {
-        list = [0, total/2, total];
+        list = [0, total];
     }
     return list;
 }

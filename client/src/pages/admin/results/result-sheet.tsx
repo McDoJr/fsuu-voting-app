@@ -3,7 +3,6 @@ import {FaAnglesDown, FaAnglesUp} from "react-icons/fa6";
 import {format} from "../../../utils/utils.ts";
 import {useState} from "react";
 import {CandidateObject, positions} from "../../../utils/mock-data.ts";
-import {sampleList} from "../../../utils/data.ts";
 
 interface ResultSheetProps {
     type: string,
@@ -19,6 +18,10 @@ const ResultSheet = ({ type, title, data }: ResultSheetProps) => {
         setDropdown(!dropdown);
     }
 
+    const getEmptyRecord = () => {
+        return <p>No records yet</p>
+    }
+
     return (
         <div className={`w-[80%] flex flex-col mx-auto border-t pb-3 ${dropdown ? 'bg-gray-50' : 'bg-white'}`}>
             <div className="flex items-center hover:bg-gray-400 bg-gray-300 py-1.5 px-3 relative cursor-pointer" onClick={toggleDropdown}>
@@ -27,9 +30,7 @@ const ResultSheet = ({ type, title, data }: ResultSheetProps) => {
             </div>
             {positions(type).map((value, index) => {
 
-                let list: CandidateObject[]|NomineesForm[] = data.filter(a => a.position === value);
-
-                list = list.length === 0 ? sampleList() : list;
+                const list: CandidateObject[]|NomineesForm[] = data.filter(a => a.position === value);
 
                 list.sort((a, b) => b.votes - a.votes);
 
@@ -39,11 +40,13 @@ const ResultSheet = ({ type, title, data }: ResultSheetProps) => {
                         <div className="flex items-center">
                             <h1 className="mr-8">Representatives :</h1>
                             <div>
-                                {list.map((item, i) => {
-                                    return (
-                                        <p className={`${i === 0 ? 'text-dark-blue font-[600]' : ''}`} key={i}>{item.firstname} {item.lastname} - {item.votes} Votes</p>
-                                    )
-                                })}
+                                {list.length === 0 ? getEmptyRecord() : (
+                                    list.map((item, i) => {
+                                        return (
+                                            <p className={`${i === 0 ? 'text-dark-blue font-[600]' : ''}`} key={i}>{item.firstname} {item.lastname} - {item.votes} Votes</p>
+                                        )
+                                    })
+                                )}
                             </div>
                         </div>
                     </div>

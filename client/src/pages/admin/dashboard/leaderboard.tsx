@@ -39,7 +39,10 @@ const Leaderboard = ({ position, data, limit, total }: LeaderboardProps) => {
                 {index === 1 && (
                     <div className="flex justify-between">
                         {getGridLabel(total).map((value, index) => {
-                            return <p key={index}>{value}</p>
+
+                            const decimal = value > parseInt(value + '');
+
+                            return <p className={`${decimal ? 'ml-[8px]' : ''}`} key={index}>{Math.ceil(value)}</p>
                         })}
                     </div>
                 )}
