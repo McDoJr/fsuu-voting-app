@@ -9,7 +9,9 @@ export interface DataContextObject {
     year: string,
     department: string,
     email: string,
-    password: string
+    password: string,
+    is_google: string,
+    picture: string
 }
 
 type DataContextType = {
@@ -26,6 +28,7 @@ type DataContextType = {
     fetchHistory: () => void,
     notification: number,
     setNotification: Dispatch<SetStateAction<number>>,
+    incomplete: boolean
 }
 
 export const DataContext = createContext<DataContextType>({
@@ -41,5 +44,6 @@ export const DataContext = createContext<DataContextType>({
     history: [],
     fetchHistory: () => {},
     notification: 0,
-    setNotification: () => {}
+    setNotification: () => {},
+    incomplete: false
 });

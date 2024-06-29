@@ -3,7 +3,7 @@ import {getTimeDifference} from "../utils/data.ts";
 export const authData = () => {
 
     const loggedIn = () => {
-        return getData();
+        return <boolean> getData();
     }
 
     const getData = () => {

@@ -6,12 +6,13 @@ import Password from "../../components/password.tsx";
 import {SigninData} from "./signin-data.ts";
 import {DataContext} from "../../utils/context.ts";
 import {authData} from "../../hooks/auth-hooks.ts";
+import { GoogleLogin } from "@react-oauth/google";
 
 const SigninPage = () => {
 
     const {user} = useContext(DataContext);
     const navigate = useNavigate();
-    const { handleSubmit, loadingStatus, handleChange, getView, getLabel, getStyleResult } = SigninData();
+    const { handleSubmit, loadingStatus, handleChange, getView, getLabel, getStyleResult, handleGoogleSignIn } = SigninData();
 
     useEffect(() => {
         setTitle("Sign In");
@@ -43,7 +44,12 @@ const SigninPage = () => {
                     <Password placeholder="Password" name="password" onChange={handleChange} >
                         {getLabel('password')}
                     </Password>
-                    <Button />
+                    <Button className="mb-3"/>
+                    <GoogleLogin 
+                        text="signin_with"
+                        locale="en"
+                        onSuccess={handleGoogleSignIn} 
+                        onError={() => console.log("Login Failed!")}/>
                     <p className="text-sm mt-1">
                         Don't have an account?
                         <Link to="/signup" className="underline text-dark-blue ml-1.5">

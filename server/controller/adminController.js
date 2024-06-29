@@ -91,13 +91,12 @@ const registerLocal = async (req, res) => {
 const updateNominee = async (req, res) => {
     const {result, student_id, department, date} = req.body;
     const list = [];
-    const condition = [];
     for(const data of result) {
-        list.push({uid: data.uid, votes: data.votes})
-        condition.push({uid: data.uid})
+        const values = {votes: data.votes};
+        list.push({uid: data.uid, ...values})
     }
     let table = new DataTable(connection, "nominees");
-    table.updateVotes(list, condition, (result) => {
+    table.updateVotes(list, (result) => {
         if(result) {
             table.setTable("history");
             table.insert({student_id, department, date}, (s) => {

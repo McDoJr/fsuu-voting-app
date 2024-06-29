@@ -7,12 +7,14 @@ import {DataContext} from "../../utils/context.ts";
 import {authData} from "../../hooks/auth-hooks.ts";
 import {setTitle} from "../../utils/utils.ts";
 import TermsAndCondition from "./terms-and-condition.tsx";
+import Button from "../../components/button.tsx";
+import { GoogleLogin } from "@react-oauth/google";
 
 const SignupPage = () => {
 
     const navigate = useNavigate();
     const {user} = useContext(DataContext);
-    const { handleSubmit, handleChange, formData, setFormData, getView, getLabel, loadingStatus, getStyleResult, getOtpPopup, handleOtpProceed } = SignupData();
+    const { handleSubmit, handleChange, formData, setFormData, getView, getLabel, loadingStatus, getStyleResult, getOtpPopup, handleOtpProceed, handleGoogleSignUp } = SignupData();
     const [view, setView] = useState(false);
 
     useEffect(() => {
@@ -120,10 +122,14 @@ const SignupPage = () => {
                             className="text-[12px] text-blue-600 cursor-pointer underline"
                             onClick={() => setView(true)}>Terms and Conditions</span></label>
                     </div>
-                    <button
-                        type="submit"
-                        className={`py-2 px-10 mt-4 bg-dark-blue text-white font-[500] tracking-wider transition-all border-2 border-dark-blue hover:bg-white hover:text-dark-blue ${formData.terms ? "" : "pointer-events-none bg-dark-blue/60 border-dark-blue/5"}`}>SUBMIT
-                    </button>
+                    <Button className={`${formData.terms ? "" : "pointer-events-none bg-dark-blue/60 border-dark-blue/5"} mb-3`}>
+                        SUBMIT
+                    </Button>
+                    <GoogleLogin 
+                        text="signup_with"
+                        locale="en"
+                        onSuccess={handleGoogleSignUp} 
+                        onError={() => console.log("Sign Up Failed!")}/>
                     <p className="text-sm mt-1">
                         Already have an account?
                         <Link to="/signin" className="underline text-dark-blue ml-1">Sign In</Link>

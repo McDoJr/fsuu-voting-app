@@ -39,6 +39,13 @@ export interface NomineesForm {
     votes: number
 }
 
+export interface GoogleInfo {
+    given_name: string,
+    family_name: string,
+    email: string,
+    picture: string
+}
+
 export type NomineesObject = NomineesForm[]
 export type StringObject = Record<string, string>;
 export type UserObject = Record<string, string>;
@@ -58,6 +65,7 @@ export type NumberArrayObject = Record<string, number[]>;
 export type FormObject = Record<string, string|number|boolean|object|null|string[]|number[]|object[]>;
 
 // DOM Events
+export type ChangeInputEvent = React.ChangeEvent<HTMLInputElement>;
 export type ChangeEvent = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
 export type ClickEvent = React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLAnchorElement>
 export type SubmitEvent = React.MouseEvent<HTMLFormElement>

@@ -44,3 +44,7 @@ export const format = (name: string) => {
 }
 
 export type EmptyObject = Record<string, string>;
+
+export const notValid = (value: string) => {
+    return value === 'undefined';
+}

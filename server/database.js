@@ -18,6 +18,7 @@ const connect = () => {
 const initTables = () => {
     const voters = (
         `CREATE TABLE IF NOT EXISTS voters (
+            uid int not null AUTO_INCREMENT,
             student_id varchar(255) not null,
             firstname varchar(255) not null,
             lastname varchar(255) not null,
@@ -26,31 +27,8 @@ const initTables = () => {
             email varchar(255) not null,
             password varchar(255) not null,
             department varchar(255) not null,
-            PRIMARY KEY (student_id)
-         )`
-    )
-
-    const executive = (
-        `CREATE TABLE IF NOT EXISTS executive (
-            uid int not null AUTO_INCREMENT,
-            firstname varchar(255) not null,
-            lastname varchar(255) not null,
-            student_id varchar(255) not null,
-            position varchar(255) not null,
-            year varchar(255) not null,
-            PRIMARY KEY (uid)
-         )`
-    )
-
-    const local = (
-        `CREATE TABLE IF NOT EXISTS local (
-            uid int not null AUTO_INCREMENT,
-            firstname varchar(255) not null,
-            lastname varchar(255) not null,
-            student_id varchar(255) not null,
-            position varchar(255) not null,
-            department varchar(255) not null,
-            year varchar(255) not null,
+            is_google varchar(255) not null,
+            picture varchar(255) not null,
             PRIMARY KEY (uid)
          )`
     )

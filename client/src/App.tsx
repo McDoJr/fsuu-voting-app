@@ -15,6 +15,9 @@ import RegistrationPage from "./pages/admin/register/registration-page.tsx";
 import axios from "axios";
 import {NomineesObject} from "./utils/types.ts";
 import VotingSuccessPage from "./pages/users/voting/voting-success-page.tsx";
+import { authData } from "./hooks/auth-hooks.ts";
+import { notValid } from "./utils/utils.ts";
+import DataDeletionPage from "./pages/users/data-deletion-page.tsx";
 
 const App = () => {
 
@@ -27,7 +30,9 @@ const App = () => {
             year: "",
             department: "",
             email: "",
-            password: ""
+            password: "",
+            is_google: "no",
+            picture: "undefined"
         }
     }
 
@@ -42,24 +47,19 @@ const App = () => {
         const data = localStorage.getItem("user");
         if(data) {
             form = convertData(JSON.parse(data));
-            // return userData;
-            // console.log("Data has been fetched!")
-            // let lastUpdated = localStorage.getItem("lastUpdated");
-            // if(lastUpdated) {
-            //     lastUpdated = JSON.parse(lastUpdated); // Delete user data after some time of inactivity
-            //
-            // }
         }
 
         return form;
     });
 
     useEffect(() => {
+
         updateNominees();
         fetchVoters();
         fetchHistory();
         const notif = localStorage.getItem("notification");
         if(notif) setNotification(JSON.parse(notif));
+
     }, []);
 
     const fetchVoters = () => {
@@ -110,10 +110,12 @@ const App = () => {
         localStorage.removeItem("lastUpdated");
     }
 
-    const isLoggedIn = localStorage.getItem("user") != null || Object.values(user).every(value => value);
+    const incomplete = notValid(user.student_id) || notValid(user.course) || notValid(user.year) || notValid(user.department);
+
+    const isLoggedIn = authData().loggedIn() || localStorage.getItem("user") != null || Object.values(user).every(value => value);
 
     return (
-        <DataContext.Provider value={{isLoggedIn, user, setUser, saveData, handleLogout, nominees, updateNominees, fetchVoters, voters, history, fetchHistory, notification, setNotification}}>
+        <DataContext.Provider value={{isLoggedIn, user, setUser, saveData, handleLogout, nominees, updateNominees, fetchVoters, voters, history, fetchHistory, notification, setNotification, incomplete}}>
             <BrowserRouter>
                 <Routes>
                     <Route index element={<SigninPage/>} />
@@ -132,6 +134,7 @@ const App = () => {
                         <Route path="/admin/registration" element={<RegistrationPage/>} />
                         <Route path="/admin/results" element={<ResultsPage/>} />
                     </Route>
+                    <Route path="/facebook_data_deletion" element={<DataDeletionPage/>}/>
                 </Routes>
             </BrowserRouter>
         </DataContext.Provider>

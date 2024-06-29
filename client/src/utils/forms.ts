@@ -1,6 +1,21 @@
 import {useState} from "react";
 import {ChangeEvent, FormObject, StringObject} from "./types.ts";
 
+export const StringForms = (data: StringObject = {}) => {
+    const [formData, setFormData] = useState(data);
+
+    const handleChange = (e: ChangeEvent) => {
+        const {name, value} = e.target;
+        if(value && name === "student_id" && !/[0-9]/.test(value.charAt(value.length - 1))) {
+            return;
+        }
+
+        setFormData({...formData, [name]: value});
+    }
+
+    return {formData, setFormData, handleChange};
+}
+
 export const Forms = (data: FormObject = {}) => {
     const [formData, setFormData] = useState(data);
 

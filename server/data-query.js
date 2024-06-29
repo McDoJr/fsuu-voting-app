@@ -57,15 +57,20 @@ class DataTable {
         })
     }
 
-    updateVotes = (datas, conditions, callback) => {
+    // datas must be a list of object with the primary key at the start
+    updateVotes = (datas, callback) => {
         const values = [];
+        const condition = Object.keys(datas[0])
+            .filter((_value, index) => index > 0)
+            .map(value => `${value} = VALUES(${value})`)
+            .join(',');
         for(const data of datas) {
-            values.push(`(${Object.values(data).join(',')})`)
+            values.push(`(${Object.values(data).join(',')})`);
         }
-        let sql = `INSERT INTO ${this.table} 
-                    (${Object.keys(datas[0]).join(',')}) 
+    
+        let sql = `INSERT INTO ${this.table} (${Object.keys(datas[0]).join(',')}) 
                     VALUES ${values.join(",")} 
-                    ON DUPLICATE KEY UPDATE votes = VALUES(votes)`;
+                    ON DUPLICATE KEY UPDATE ${condition}`;
 
         this.db.query(sql, (error, result) => {
             if(error) throw error;

@@ -4,7 +4,7 @@ import {VotingData} from "./voting-data.ts";
 import {useContext, useEffect, useState} from "react";
 import {AllRecordObject} from "../../../utils/types.ts";
 import {DataContext} from "../../../utils/context.ts";
-import {getLogo, setTitle} from "../../../utils/utils.ts";
+import {getLogo, notValid, setTitle} from "../../../utils/utils.ts";
 import {useNavigate} from "react-router-dom";
 import UserNavigation from "../user-navigation.tsx";
 import {positions} from "../../../utils/mock-data.ts";
@@ -12,7 +12,7 @@ import {positions} from "../../../utils/mock-data.ts";
 const VotingPage = () => {
 
     const navigate = useNavigate();
-    const { user, nominees, history } = useContext(DataContext);
+    const { user, nominees, history, incomplete } = useContext(DataContext);
     const [type, setType] = useState('executive');
     const { records, handleChange, formData, refreshForm } = VotingData(type, nominees, user.department);
     const [votes, setVotes] = useState<AllRecordObject>({});
@@ -21,7 +21,7 @@ const VotingPage = () => {
 
     useEffect(() => {
         setTitle('Vote');
-        if(history.find(value => value.student_id === user.student_id)) {
+        if(incomplete || history.find(value => value.student_id === user.student_id)) {
             navigate('/profile');
         }
     }, []);
