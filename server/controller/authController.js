@@ -24,9 +24,13 @@ const login = async (req, res) => {
                 message: "Gmail not registered"
             });
         }
+        // If using google signin
         if(is_google) {
             return res.json({status: true, data: result, message: "Login successfully"});
+        }else if(result.is_google === 'yes') { // If account was registered using google sign in but login manually
+            return res.json({status: false, message: "Failed to login!"});
         }
+
         bcrypt.compare(password, result.password, (error, data) => {
             if(error) throw error;
             let form = {
