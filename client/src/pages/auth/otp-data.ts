@@ -35,6 +35,16 @@ const OtpData = () => {
         if(data && !/[0-9]/.test(data[data.length - 1])) {
             return
         }
+        if(data.length === 6) {
+            let finalData = formData;
+            for(let i = 0; i < 6; i++) {
+                finalData = {...finalData, [i]: data[i]}
+            }
+            setFormData({...finalData});
+            const element = <HTMLInputElement> document.getElementById(5 + "");
+            element.focus();
+            return;
+        }
         const value = data ? data[data.length-1] : data;
         const other = index + 1;
         if(!formData[index]) {
@@ -66,7 +76,7 @@ const OtpData = () => {
                     setTimeout(() => closePopup(), 1500);
                 }
             })
-            .catch(console.log);
+            .catch(error => console.log(error.message));
     }
 
     return { handleSubmit, onChange, onKeyDown, getView, formData, sendToLandingPage };

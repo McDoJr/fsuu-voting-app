@@ -25,7 +25,7 @@ const ProfilePage = () => {
         navigate(link, {state: {data}});
     }
 
-    const profileImage = user.picture === 'undefined' ? require('@assets/profile.png') : user.picture;
+    const profileImage = user.picture === 'NA' ? require('@assets/profile.png') : user.picture;
 
     return (
         <>

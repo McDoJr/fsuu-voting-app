@@ -121,11 +121,15 @@ const verification = async (req, res) => {
 
     const {email} = req.body;
 
+
     let config = {
         service: "gmail",
         auth: {
             user: EMAIL,
             pass: PASSWORD
+        },
+        tls: {
+            rejectUnauthorized: false
         }
     }
 
@@ -148,6 +152,7 @@ const verification = async (req, res) => {
             preview: nodemailer.getTestMessageUrl(info)
         })
     }).catch(error => {
+        console.log("Error", error.message);
         return res.status(500).json({ error });
     });
 }

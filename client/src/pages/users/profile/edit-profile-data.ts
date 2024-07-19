@@ -4,7 +4,7 @@ import { StringForms } from "../../../utils/forms";
 import { ChangeEvent } from "../../../utils/types";
 import axios from "axios";
 import { useContext } from "react";
-import { DataContext, DataContextObject } from "../../../utils/context";
+import { DataContext } from "../../../utils/context";
 
 export const EditProfileData = () => {
 

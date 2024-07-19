@@ -8,18 +8,17 @@ import {HOST} from "../../utils/data.ts";
 import {useNavigate} from "react-router-dom";
 import { CredentialResponse } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import { useContext } from "react";
-import { DataContext } from "../../utils/context.ts";
+import { useState} from "react";
 
 export const SignupData = () => {
 
     const navigate = useNavigate();
-    const { saveData } = useContext(DataContext);
     const { viewLoading, closeLoading, loadingStatus } = LoadingOptions();
     const { handlePopup, getView, closePopup } = PopupForm();
     const { formData, setFormData, handleChange: onChange } = SignupForm();
     const { errors, setErrors, validateErrors, getLabel, getStyleResult } = ErrorOptions();
     const { getOtpPopup, viewOtpPopup } = OtpPopup();
+    const [visible, setVisible] = useState(false);
 
 
     const handleOtpProceed = () => {
@@ -31,38 +30,48 @@ export const SignupData = () => {
         validateErrors(e.target.name);
     }
 
+
     const handleGoogleSignUp = (response: CredentialResponse) => {
         const {credential} = response;
         if(credential === undefined) return;
+
+        // const student_id: string = <string> formData.student_id;
+        // const department: string = <string> formData.department;
+        // const course: string = <string> formData.course;
+        // const year: string = <string> formData.year;
         const { given_name: firstname, family_name: lastname, email, picture } = jwtDecode(credential) as GoogleInfo;
-        const data = {student_id: 'undefined', 
-            firstname,
-            lastname, 
-            course: 'undefined',
-            year: 'undefined', 
-            department: 'undefined',
-            email, 
-            password: 'undefined',
-            is_google: 'yes',
-            picture};
-        
-        axios.post(`${HOST}/api/users/register`, data)
-        .then(res => {
-            const {status, message} = res.data;
-            if(status) {
-                handlePopup(true, true, message);
-                setTimeout(() => {
-                    handlePopup(true, true, message);
-                    setTimeout(() => closePopup(), 1500);
-                    saveData(data);
-                    navigate("/vote");
-                }, 1500);
-            } else {
-                handlePopup(true, false, message);
-                setTimeout(() => closePopup(), 1500);
-            }
-        })
-        .catch(console.log);
+        // const data = {...formData, firstname, lastname, email, password: 'undefined', is_google: 'yes', picture};
+        setFormData({...formData, firstname, lastname, email,
+            password: 'undefined', confirm_password: 'undefined', is_google: 'yes', picture});
+        setVisible(true);
+    }
+
+    const handleGoogleSubmit = (e: SubmitEvent) => {
+        e.preventDefault();
+        const errors = validateForm(formData);
+        if(Object.keys(errors).length > 0) {
+            setErrors(errors);
+        }else {
+            setErrors({});
+            axios.post(`${HOST}/api/users/register`, formData)
+                .then(res => {
+                    const {status, message} = res.data;
+                    if(status) {
+                        handlePopup(true, true, message);
+                        setTimeout(() => {
+                            handlePopup(true, true, message);
+                            setTimeout(() => closePopup(), 1500);
+                            navigate("/signin");
+                        }, 1500);
+                    } else {
+                        handlePopup(true, false, message);
+                        setTimeout(() => closePopup(), 1500);
+                    }
+                    setVisible(false);
+                    setFormData({student_id: ''});
+                })
+                .catch(console.log);
+        }
     }
 
     const handleSubmit = (e: SubmitEvent) => {
@@ -98,5 +107,5 @@ export const SignupData = () => {
         }
     }
 
-    return { loadingStatus, handleSubmit, handleGoogleSignUp, handleChange, getLabel, getView, errors, setFormData, getStyleResult, formData, getOtpPopup, handleOtpProceed };
+    return { loadingStatus, handleSubmit, handleGoogleSignUp, handleGoogleSubmit,  handleChange, visible, getLabel, getView, errors, setFormData, getStyleResult, formData, getOtpPopup, handleOtpProceed };
 }

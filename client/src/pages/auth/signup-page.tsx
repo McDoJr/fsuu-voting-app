@@ -14,8 +14,9 @@ const SignupPage = () => {
 
     const navigate = useNavigate();
     const {user} = useContext(DataContext);
-    const { handleSubmit, handleChange, formData, setFormData, getView, getLabel, loadingStatus, getStyleResult, getOtpPopup, handleOtpProceed, handleGoogleSignUp } = SignupData();
+    const { handleSubmit, handleChange, formData, handleGoogleSubmit, visible, setFormData, getView, getLabel, loadingStatus, getStyleResult, getOtpPopup, handleOtpProceed, handleGoogleSignUp } = SignupData();
     const [view, setView] = useState(false);
+
 
     useEffect(() => {
         setTitle('Sign Up');
@@ -33,6 +34,64 @@ const SignupPage = () => {
         setView(false);
         setFormData({...formData, terms: true})
     }
+
+    const getAdditionalDetails = () => {
+        return (
+            <section className="w-full h-screen absolute top-0 left-0 flex justify-center items-center bg-black/80">
+                <form
+                    onSubmit={handleGoogleSubmit}
+                    className="w-[450px] flex flex-col p-10 bg-white">
+                    <h1 className="font-prompt font-bold text-dark-blue text-3xl mb-6 drop-shadow-lg text-center">REQUIRED DETAILS</h1>
+                    <div className="flex">
+                        <div className="w-full mr-3 flex flex-col relative">
+                            {getLabel("student_id")}
+                            <input type="text" placeholder="Student ID" name="student_id"
+                                   value={formData.student_id + ""}
+                                   onChange={handleChange}
+                                   className={`w-full border border-gray-400 px-4 py-1.5 text-sm text-black rounded-md mb-3 outline-1 ${getStyleResult('student_id')}`}/>
+                        </div>
+                        <div className="w-full flex flex-col relative">
+                            {getLabel("department")}
+                            <select name="department"
+                                    onChange={handleChange}
+                                    className={`w-full cursor-pointer border border-gray-400 px-4 py-1.5 text-sm ${formData.department ? 'text-black' : 'text-placeholder'} rounded-md mb-3 mr-3 outline-1 ${getStyleResult('department')}`}>
+                                <option hidden>Department</option>
+                                {Object.keys(DEPARTMENTS).map((data, index) => {
+                                    return <option value={data} className="text-dark-blue" key={index}>{data}</option>;
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="flex">
+                        <div className="w-full mr-3 flex flex-col relative">
+                            {getLabel("course")}
+                            <select name="course"
+                                    onChange={handleChange}
+                                    className={`w-full border border-gray-400 px-4 py-1.5 text-sm ${formData.course ? 'text-black' : 'text-placeholder'} rounded-md mb-3 mr-3 outline-1 ${formData.department ? 'cursor-pointer' : 'pointer-events-none'} ${getStyleResult('course')}`}>
+                                <option hidden>Course</option>
+                                {formData.department && COURSES(formData.department + "").map((data, index) => {
+                                    return <option value={data} className="text-dark-blue" key={index}>{data}</option>
+                                })}
+                            </select>
+                        </div>
+                        <div className="w-full flex flex-col relative">
+                            {getLabel("year")}
+                            <select name="year"
+                                    onChange={handleChange}
+                                    className={`w-full cursor-pointer border border-gray-400 px-4 py-1.5 text-sm ${formData.year ? 'text-black' : 'text-placeholder'} rounded-md mb-3 outline-1 ${getStyleResult('year')}`}>
+                                <option hidden>Year</option>
+                                <option value="1" className="text-dark-blue">I</option>
+                                <option value="2" className="text-dark-blue">II</option>
+                                <option value="3" className="text-dark-blue">III</option>
+                                <option value="4" className="text-dark-blue">IV</option>
+                            </select>
+                        </div>
+                    </div>
+                    <Button>SUBMIT</Button>
+                </form>
+            </section>
+        )
+    };
 
     return (
         <section className="w-full h-screen flex flex-col justify-center items-center relative">
@@ -139,6 +198,7 @@ const SignupPage = () => {
             {loadingStatus()}
             {getView()}
             {getOtpPopup(handleOtpProceed)}
+            {visible && getAdditionalDetails()}
             {view && <TermsAndCondition setView={setView} handleAgreeAndClose={handleAgreeAndClose}/>}
         </section>
     )

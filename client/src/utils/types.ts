@@ -39,6 +39,13 @@ export interface NomineesForm {
     votes: number
 }
 
+export interface RequiredDetails{
+    student_id: string,
+    department: string,
+    course: string,
+    year: string
+}
+
 export interface GoogleInfo {
     given_name: string,
     family_name: string,

@@ -12,7 +12,7 @@ import {positions} from "../../../utils/mock-data.ts";
 const VotingPage = () => {
 
     const navigate = useNavigate();
-    const { user, nominees, history, incomplete } = useContext(DataContext);
+    const { user, nominees, history } = useContext(DataContext);
     const [type, setType] = useState('executive');
     const { records, handleChange, formData, refreshForm } = VotingData(type, nominees, user.department);
     const [votes, setVotes] = useState<AllRecordObject>({});
@@ -21,7 +21,7 @@ const VotingPage = () => {
 
     useEffect(() => {
         setTitle('Vote');
-        if(incomplete || history.find(value => value.student_id === user.student_id)) {
+        if(history.find(value => value.student_id === user.student_id)) {
             navigate('/profile');
         }
     }, []);

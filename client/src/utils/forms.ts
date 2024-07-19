@@ -64,7 +64,9 @@ export const SignupForm = () => {
         password: "",
         confirm_password: "",
         terms: false,
-        otp: ""
+        otp: "",
+        is_google: "no",
+        picture: "NA"
     });
 }
 
@@ -100,7 +102,7 @@ export const OtpForm = () => {
 export const validateForm = (formData: FormObject) => {
 
     const errors: StringObject = {};
-    const emailFormat = /^[a-z]+\.[a-z]+@urios\.edu\.ph$/;
+    const emailFormat = /^[a-zA-Z0-9_.]+@[a-z]+\.[a-z]+$/;
 
     for(const key in formData) {
         const value = formData[key];
